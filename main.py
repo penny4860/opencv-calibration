@@ -12,7 +12,7 @@ def get_object_points(n_images, n_pattern_rows=6, n_pattern_cols=8):
     return points
 
 
-def get_image_points(images, n_pattern_rows=6, n_pattern_cols=8):
+def get_image_points(images, n_pattern_rows=6, n_pattern_cols=8, show_pts=False):
     imgpoints = [] # 2d points in image plane.
     
     # Step through the list and search for chessboard corners
@@ -26,16 +26,16 @@ def get_image_points(images, n_pattern_rows=6, n_pattern_cols=8):
         # If found, add object points, image points
         if ret == True:
             imgpoints.append(corners)
-    
-#             # Draw and display the corners
-#             cv2.drawChessboardCorners(img, (n_pattern_cols,n_pattern_rows), corners, ret)
-#             #write_name = 'corners_found'+str(idx)+'.jpg'
-#             #cv2.imwrite(write_name, img)
-#             cv2.imshow('img', img)
-#             cv2.waitKey(500)
-#     
-#     cv2.destroyAllWindows()
+            
+            if show_pts:
+                # Draw and display the corners
+                cv2.drawChessboardCorners(img, (n_pattern_cols,n_pattern_rows), corners, ret)
+                cv2.imshow('img', img)
+                cv2.waitKey(500)
+     
+    cv2.destroyAllWindows()
     return imgpoints
+
 
 # Make a list of calibration images
 images = glob.glob('calibration_wide/GO*.jpg')
